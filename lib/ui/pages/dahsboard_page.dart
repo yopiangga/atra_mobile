@@ -151,18 +151,18 @@ class _DashboardPageState extends State<DashboardPage> {
                     Expanded(
                       child: GestureDetector(
                           onTap: () async {
-                            // File image = await getImageCamera();
-                            // ShowDialogLoadingWidget(context: context);
-                            // List<dynamic> labels =
-                            //     await imageClassification(image);
-                            // Navigator.pop(context);
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => ImageDetectionPage(
-                            //               labels: labels,
-                            //               image: image,
-                            //             )));
+                            File image = await getImageCamera();
+                            ShowDialogLoadingWidget(context: context);
+                            List<dynamic> labels =
+                                await imageClassification(image);
+                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ImageDetectionPage(
+                                          labels: labels,
+                                          image: image,
+                                        )));
                           },
                           child: Container(
                             height: 100,
@@ -196,19 +196,19 @@ class _DashboardPageState extends State<DashboardPage> {
                     Expanded(
                       child: GestureDetector(
                           onTap: () async {
-                            // File image = await getImageGallery();
-                            // ShowDialogLoadingWidget(context: context);
-                            // List<dynamic> labels =
-                            //     await imageClassification(image);
-                            // Navigator.pop(context);
+                            File image = await getImageGallery();
+                            ShowDialogLoadingWidget(context: context);
+                            List<dynamic> labels =
+                                await imageClassification(image);
+                            Navigator.pop(context);
 
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => ImageDetectionPage(
-                            //               labels: labels,
-                            //               image: image,
-                            //             )));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ImageDetectionPage(
+                                          labels: labels,
+                                          image: image,
+                                        )));
                           },
                           child: Container(
                             height: 100,

@@ -20,6 +20,8 @@ import 'package:atra_mobile/ui/widgets/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart'
+    as imageLabelling;
 
 part 'start_page.dart';
 part 'article_detail_page.dart';
@@ -30,3 +32,4 @@ part 'documents_page.dart';
 part 'main_page.dart';
 part 'sign_in_page.dart';
 part 'sign_up_page.dart';
+part 'image_detection_page.dart';

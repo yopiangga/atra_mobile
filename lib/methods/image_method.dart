@@ -55,24 +55,14 @@ Future<List<dynamic>> textClassification(File image) async {
 
   if (image == null) return null;
 
-  final textDetector = ml.GoogleMlKit.vision.textDetector();
+  final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
 
-  ml.InputImage inputImage = ml.InputImage.fromFilePath(image.path);
+  final RecognizedText recognizedText = await textRecognizer
+      .processImage(imageLabelling.InputImage.fromFile(image));
 
-  final ml.RecognisedText recognisedText =
-      await textDetector.processImage(inputImage);
-
-  String text = recognisedText.text;
-  for (ml.TextBlock block in recognisedText.blocks) {
-    final Rect rect = block.rect;
-    final List<Offset> cornerPoints = block.cornerPoints;
-    final String text = block.text;
-    final List<String> languages = block.recognizedLanguages;
-
-    for (ml.TextLine line in block.lines) {
-      // Same getters as TextBlock
-      for (ml.TextElement element in line.elements) {
-        // Same getters as TextBlock
+  for (TextBlock block in recognizedText.blocks) {
+    for (TextLine line in block.lines) {
+      for (TextElement element in line.elements) {
         dataText += element.text + " ";
       }
       dataText += '\n';
@@ -81,4 +71,21 @@ Future<List<dynamic>> textClassification(File image) async {
 
   // return [dataText, File(image.path)];
   return [dataText];
+}
+
+Future<List<imageLabelling.ImageLabel>> imageClassification(img) async {
+  if (img == null) return null;
+
+  final imageLabeler = imageLabelling.ImageLabeler(
+      options: imageLabelling.ImageLabelerOptions(confidenceThreshold: 0.5));
+  List<imageLabelling.ImageLabel> labels =
+      await imageLabeler.processImage(imageLabelling.InputImage.fromFile(img));
+
+  for (imageLabelling.ImageLabel label in labels) {
+    final String text = label.label;
+    final int index = label.index;
+    final double confidence = label.confidence;
+  }
+
+  return labels;
 }

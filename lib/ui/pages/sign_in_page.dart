@@ -25,10 +25,8 @@ class _SignInPageState extends State<SignInPage> {
     tts.speak(text);
   }
 
-  TextEditingController _emailController =
-      TextEditingController(text: "yopiangga@gmail.com");
-  TextEditingController _passwordController =
-      TextEditingController(text: "123456");
+  TextEditingController _emailController = TextEditingController(text: "");
+  TextEditingController _passwordController = TextEditingController(text: "");
 
   bool isEmailValid = false;
   bool isPasswordValid = false;
