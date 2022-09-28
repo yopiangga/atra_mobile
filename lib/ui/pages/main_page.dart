@@ -60,45 +60,51 @@ class _MainPageState extends State<MainPage> {
       setState(() {
         loading = true;
       });
-      // final img = await getImageCamera();
-      // final result = await textClassification(img);
 
-      // if (result == false || result == null) {
-      //   setState(() {
-      //     loading = false;
-      //   });
-      //   return;
-      // } else {
-      //   DocumentModel document = DocumentModel(
-      //     id: "1",
-      //     time: "0",
-      //     uid: user.uid,
-      //   );
+      File img;
+      if (mode == "camera")
+        img = await getImageCamera();
+      else
+        img = await getImageGallery();
 
-      //   document.text.add(result[0]);
-      //   document.image.add(result[1]);
+      final result = await textClassification(img);
 
-      //   final resJob = await ProsaServices.submitTTS(document.text);
-      //   final jobId = jsonDecode(resJob.body)['job_id'];
+      if (result == false || result == null) {
+        setState(() {
+          loading = false;
+        });
+        return;
+      } else {
+        DocumentModel document = DocumentModel(
+          id: "1",
+          time: "0",
+          uid: user.uid,
+        );
 
-      //   document.job_id = jobId;
+        document.text.add(result[0]);
+        // document.image.add(result[1]);
 
-      //   final res = await DocumentServices.addDocument(document);
+        final resJob = await ProsaServices.submitTTS(document.text);
+        final jobId = jsonDecode(resJob.body)['job_id'];
 
-      //   document.id = jsonDecode(res.body.toString())['data'];
-      //   document.time = jsonDecode(res.body.toString())['data'];
+        document.job_id = jobId;
 
-      //   setState(() {
-      //     documents.add(document);
-      //     loading = false;
-      //   });
-      //   Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //           builder: (context) => DocumentDetailPage(
-      //                 document: documents.last,
-      //               )));
-      // }
+        final res = await DocumentServices.addDocument(document);
+
+        document.id = jsonDecode(res.body.toString())['data'];
+        document.time = jsonDecode(res.body.toString())['data'];
+
+        setState(() {
+          documents.add(document);
+          loading = false;
+        });
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DocumentDetailPage(
+                      document: documents.last,
+                    )));
+      }
     }
 
     return Scaffold(

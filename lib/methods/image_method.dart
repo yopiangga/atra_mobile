@@ -52,6 +52,9 @@ Future<File> cropImage(File imageFile) async {
 
 Future<List<dynamic>> textClassification(File image) async {
   String dataText = "";
+
+  if (image == null) return null;
+
   final textDetector = ml.GoogleMlKit.vision.textDetector();
 
   ml.InputImage inputImage = ml.InputImage.fromFilePath(image.path);

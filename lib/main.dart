@@ -36,10 +36,10 @@ class MyApp extends StatelessWidget {
                 child: MaterialApp(
                   debugShowCheckedModeBanner: false,
                   title: 'ATRA',
-                  // home: snapshot.data != null
-                  //     ? MainPage(uid: snapshot?.data?.uid)
-                  //     : StartPage(),
-                  home: StartPage(),
+                  home: snapshot.data != null
+                      ? MainPage(uid: snapshot?.data?.uid)
+                      : StartPage(),
+                  // home: StartPage(),
                 ),
               ),
             );

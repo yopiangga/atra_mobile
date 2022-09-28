@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
+import 'package:atra_mobile/methods/methods.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';

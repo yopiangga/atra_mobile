@@ -98,7 +98,42 @@ class _StartPageState extends State<StartPage> {
                 ),
               ),
               GestureDetector(
-                onTap: () async {},
+                onTap: () async {
+                  setState(() {
+                    loading = true;
+                  });
+
+                  // final img = await getImageCamera();
+                  final img = await getImageGallery();
+                  final result = await textClassification(img);
+
+                  if (result == false || result == null) {
+                    setState(() {
+                      loading = false;
+                    });
+                    return;
+                  } else {
+                    DocumentModel document = DocumentModel(
+                      id: "1",
+                      time: "0",
+                      uid: "non-login",
+                    );
+
+                    document.text.add(result[0]);
+                    // document.image.add(result[1]);
+
+                    setState(() {
+                      documents.add(document);
+                      loading = false;
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DocumentPage(
+                                  document: documents.last,
+                                )));
+                  }
+                },
                 child: Container(
                   width: 250,
                   height: 46,
