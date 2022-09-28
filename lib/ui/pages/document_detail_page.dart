@@ -336,21 +336,34 @@ class _DocumentDetailPageState extends State<DocumentDetailPage> {
       isLoading = true;
     });
 
-    // final img = await getImageCamera();
-    // final result = await textClassification(img);
+    File img;
 
-    // if (result == false || result == null) {
-    //   setState(() {
-    //     isLoading = false;
-    //   });
-    //   return;
-    // } else {
-    //   setState(() {
-    //     widget.document.text.add(result[0]);
-    //     widget.document.image.add(result[1]);
-    //     isLoading = false;
-    //   });
-    // }
+    if (mode == "camera") {
+      img = await getImageCamera();
+    } else {
+      img = await getImageGallery();
+    }
+
+    if (img == null) {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+    final result = await textClassification(img);
+
+    if (result == false || result == null) {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    } else {
+      setState(() {
+        widget.document.text.add(result[0]);
+        // widget.document.image.add(result[1]);
+        isLoading = false;
+      });
+    }
   }
 
   void _showMaterialTextDialog() {

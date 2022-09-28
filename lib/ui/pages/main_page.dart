@@ -69,6 +69,13 @@ class _MainPageState extends State<MainPage> {
       else
         img = await getImageGallery();
 
+      if (img == null) {
+        setState(() {
+          loading = false;
+        });
+        return;
+      }
+
       final result = await textClassification(img);
 
       if (result == false || result == null) {
