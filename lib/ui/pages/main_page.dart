@@ -64,6 +64,8 @@ class _MainPageState extends State<MainPage> {
       File img;
       if (mode == "camera")
         img = await getImageCamera();
+      else if (mode == "gallery")
+        img = await getImageGallery();
       else
         img = await getImageGallery();
 
@@ -105,6 +107,24 @@ class _MainPageState extends State<MainPage> {
                       document: documents.last,
                     )));
       }
+    }
+
+    Future<void> handleTakeFile() async {
+      setState(() {
+        loading = true;
+      });
+
+      File img;
+
+      img = await getFilePDF();
+
+      final result = await textClassification(img);
+
+      print(result[0]);
+
+      setState(() {
+        loading = false;
+      });
     }
 
     return Scaffold(
@@ -195,7 +215,9 @@ class _MainPageState extends State<MainPage> {
                 heroTag: "btnFile",
                 elevation: 0,
                 backgroundColor: mainColor,
-                onPressed: () async {},
+                onPressed: () async {
+                  // await handleTakeFile();
+                },
                 child: SizedBox(
                   height: 28,
                   width: 28,

@@ -103,8 +103,8 @@ class _StartPageState extends State<StartPage> {
                     loading = true;
                   });
 
-                  // final img = await getImageCamera();
-                  final img = await getImageGallery();
+                  final img = await getImageCamera();
+                  // final img = await getImageGallery();
                   final result = await textClassification(img);
 
                   if (result == false || result == null) {

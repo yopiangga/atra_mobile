@@ -3,8 +3,9 @@ part of 'pages.dart';
 class ImageDetectionPage extends StatefulWidget {
   List<imageLabelling.ImageLabel> labels;
   File image;
+  String mode;
 
-  ImageDetectionPage({this.labels, this.image});
+  ImageDetectionPage({this.labels, this.image, this.mode});
 
   @override
   State<ImageDetectionPage> createState() => _ImageDetectionPageState();
@@ -13,11 +14,13 @@ class ImageDetectionPage extends StatefulWidget {
 class _ImageDetectionPageState extends State<ImageDetectionPage> {
   FlutterTts tts = FlutterTts();
   bool statusPlay = false;
+  bool isLoading = false;
 
   initState() {
     super.initState();
     tts.setLanguage('en-US');
     tts.setSpeechRate(0.4);
+    autoPlay();
   }
 
   void dispose() {
@@ -27,6 +30,11 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
 
   playAudio(String text) async {
     tts.speak(text);
+  }
+
+  autoPlay() {
+    playAudio(
+        widget.labels.length.toString() + " Objects detected successfully");
   }
 
   String preProcess(List<imageLabelling.ImageLabel> dataLabel) {
@@ -60,6 +68,20 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
         ),
         centerTitle: false,
       ),
+      bottomNavigationBar: Container(
+          height: 70,
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: isLoading
+              ? SpinKitWave(color: mainColor, type: SpinKitWaveType.start)
+              : BTNAddWidget(
+                  title: widget.mode == "camera" ? "Kamera" : "Galeri",
+                  onTap: () => {
+                    setState(() {
+                      isLoading = true;
+                    }),
+                    onAdd()
+                  },
+                )),
       body: ListView(
         children: [
           Container(
@@ -97,12 +119,19 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
                                     fontSize: 12, fontWeight: FontWeight.w300),
                               ),
                               SizedBox(height: 5),
-                              Text(
-                                widget.labels.length.toString() +
-                                    " Objek berhasil terdeteksi",
-                                maxLines: 2,
-                                style: blackTextFont.copyWith(
-                                    fontSize: 16, fontWeight: FontWeight.w600),
+                              GestureDetector(
+                                onDoubleTap: () {
+                                  playAudio(widget.labels.length.toString() +
+                                      " Objects detected successfully");
+                                },
+                                child: Text(
+                                  widget.labels.length.toString() +
+                                      " Objects detected successfully",
+                                  maxLines: 2,
+                                  style: blackTextFont.copyWith(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ),
                               SizedBox(height: 5),
                             ],
@@ -177,5 +206,32 @@ class _ImageDetectionPageState extends State<ImageDetectionPage> {
         ],
       ),
     );
+  }
+
+  dynamic onAdd() async {
+    setState(() {
+      isLoading = true;
+    });
+    File img;
+    if (widget.mode == "camera") {
+      img = await getImageCamera();
+    } else {
+      img = await getImageGallery();
+    }
+
+    if (img == null) {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+
+    widget.labels = await imageClassification(img);
+    widget.image = img;
+    setState(() {
+      isLoading = false;
+    });
+
+    autoPlay();
   }
 }

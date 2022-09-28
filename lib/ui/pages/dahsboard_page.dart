@@ -152,6 +152,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: GestureDetector(
                           onTap: () async {
                             File image = await getImageCamera();
+                            if (image == null) return;
                             ShowDialogLoadingWidget(context: context);
                             List<dynamic> labels =
                                 await imageClassification(image);
@@ -160,9 +161,9 @@ class _DashboardPageState extends State<DashboardPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ImageDetectionPage(
-                                          labels: labels,
-                                          image: image,
-                                        )));
+                                        labels: labels,
+                                        image: image,
+                                        mode: "camera")));
                           },
                           child: Container(
                             height: 100,
@@ -197,6 +198,8 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: GestureDetector(
                           onTap: () async {
                             File image = await getImageGallery();
+                            if (image == null) return;
+
                             ShowDialogLoadingWidget(context: context);
                             List<dynamic> labels =
                                 await imageClassification(image);
@@ -206,9 +209,9 @@ class _DashboardPageState extends State<DashboardPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ImageDetectionPage(
-                                          labels: labels,
-                                          image: image,
-                                        )));
+                                        labels: labels,
+                                        image: image,
+                                        mode: "gallery")));
                           },
                           child: Container(
                             height: 100,

@@ -245,21 +245,21 @@ class _DocumentPageState extends State<DocumentPage> {
     setState(() {
       isLoading = true;
     });
-    // final img = await getImageCamera();
-    // final result = await textClassification(img);
+    final img = await getImageCamera();
+    final result = await textClassification(img);
 
-    // if (result == false || result == null) {
-    //   setState(() {
-    //     isLoading = false;
-    //   });
-    //   return;
-    // } else {
-    //   setState(() {
-    //     widget.document.text.add(result[0]);
-    //     widget.document.image.add(result[1]);
-    //     isLoading = false;
-    //   });
-    // }
+    if (result == false || result == null) {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    } else {
+      setState(() {
+        widget.document.text.add(result[0]);
+        // widget.document.image.add(result[1]);
+        isLoading = false;
+      });
+    }
 
     autoPlay();
   }
