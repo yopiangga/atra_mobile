@@ -150,6 +150,9 @@ class _DashboardPageState extends State<DashboardPage> {
                   children: [
                     Expanded(
                       child: GestureDetector(
+                          onDoubleTap: () {
+                            playAudio("Deteksi gambar dengan kamera");
+                          },
                           onTap: () async {
                             File image = await getImageCamera();
                             if (image == null) return;
@@ -196,6 +199,9 @@ class _DashboardPageState extends State<DashboardPage> {
                     SizedBox(width: 16),
                     Expanded(
                       child: GestureDetector(
+                          onDoubleTap: () {
+                            playAudio("Deteksi gambar dari galeri");
+                          },
                           onTap: () async {
                             File image = await getImageGallery();
                             if (image == null) return;
