@@ -171,7 +171,7 @@ class _MainPageState extends State<MainPage> {
               width: tapPlus ? 64 : 46,
               height: tapPlus ? 64 : 46,
               margin: EdgeInsets.only(
-                  bottom: tapPlus ? 110 : 42, right: tapPlus ? 200 : 0),
+                  bottom: tapPlus ? 110 : 42, right: tapPlus ? 120 : 0),
               child: FloatingActionButton(
                 heroTag: "btnCamera",
                 elevation: 0,
@@ -194,7 +194,7 @@ class _MainPageState extends State<MainPage> {
               width: tapPlus ? 64 : 46,
               height: tapPlus ? 64 : 46,
               margin: EdgeInsets.only(
-                  bottom: tapPlus ? 110 : 42, left: tapPlus ? 0 : 0),
+                  bottom: tapPlus ? 110 : 42, left: tapPlus ? 120 : 0),
               child: FloatingActionButton(
                 heroTag: "btnGallery",
                 elevation: 0,
@@ -206,29 +206,6 @@ class _MainPageState extends State<MainPage> {
                   height: 28,
                   width: 28,
                   child: Icon(MdiIcons.viewGalleryOutline,
-                      color: Colors.white.withOpacity(1), size: 28),
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              width: tapPlus ? 64 : 46,
-              height: tapPlus ? 64 : 46,
-              margin: EdgeInsets.only(
-                  bottom: tapPlus ? 110 : 42, left: tapPlus ? 200 : 0),
-              child: FloatingActionButton(
-                heroTag: "btnFile",
-                elevation: 0,
-                backgroundColor: mainColor,
-                onPressed: () async {
-                  // await handleTakeFile();
-                },
-                child: SizedBox(
-                  height: 28,
-                  width: 28,
-                  child: Icon(MdiIcons.fileDocumentOutline,
                       color: Colors.white.withOpacity(1), size: 28),
                 ),
               ),
